@@ -38,6 +38,7 @@
       text-decoration: none;
       font-weight: bold;
       transition: background 0.3s;
+      cursor: pointer;
     }
     nav a:hover {
       background-color: #e60073;
@@ -94,12 +95,100 @@
     .btn:hover {
       background-color: #e60073;
     }
+    .feedback-grid {
+      display: grid;
+      gap: 2rem;
+      margin-top: 5rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .feedback-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    .stars {
+      font-size: 1.2rem;
+      color: #ffc107;
+      margin-bottom: 0.5rem;
+    }
     footer {
       background-color: #ff66b2;
       color: white;
       text-align: center;
       padding: 1.5rem 1rem;
       margin-top: 4rem;
+    }
+
+    /* Modal Styles - Candy Themed */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(255, 51, 153, 0.4);
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background: linear-gradient(135deg, #ffccf9, #ffc1e3);
+      margin: auto;
+      padding: 2rem;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+      position: relative;
+      animation: popUp 0.3s ease-out;
+    }
+    @keyframes popUp {
+      from { transform: scale(0.7); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .close {
+      color: #ff3399;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close:hover {
+      color: #e60073;
+    }
+    .modal-content h2 {
+      color: #ff3399;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0 1rem 0;
+      border: 2px solid #ff99cc;
+      border-radius: 15px;
+      background: #fff0f5;
+      font-size: 1rem;
+      outline: none;
+    }
+    form button {
+      background-color: #ff3399;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+    form button:hover {
+      background-color: #e60073;
     }
     @media (max-width: 600px) {
       nav {
@@ -111,6 +200,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <header>
@@ -120,7 +210,8 @@
 
 <nav>
   <a href="#products">Shop</a>
-  <a href="#contact">Contact Us</a>
+  <a id="contactLink">Contact Us</a>
+  <a id="feedbackLink">Feedback</a>
 </nav>
 
 <div class="hero">
@@ -128,6 +219,7 @@
 </div>
 
 <div class="container">
+
   <section id="products">
     <h2 style="text-align:center; color:#ff3399;">Our Sweet Collection 🍬</h2>
     <div class="products">
@@ -154,17 +246,89 @@
     </div>
   </section>
 
-  <section id="contact" style="margin-top: 5rem;">
-    <h2 style="text-align:center; color:#ff3399;">Get in Touch 💌</h2>
-    <p style="text-align:center;">Questions, bulk orders, or just want to say hi? We'd love to hear from you!</p>
-    <p style="text-align:center;">📧 Email: <a href="mailto:sales@skittlesworld.com">sales@skittlesworld.com</a></p>
-    <p style="text-align:center;">📞 Phone: +1 (234) 567-8901</p>
+  <section id="customer-feedback">
+    <h2 style="text-align:center; color:#ff3399;">What Our Customers Say 💬</h2>
+    <div class="feedback-grid">
+
+      <div class="feedback-card">
+        <div class="stars">★★★★★</div>
+        <p>"Absolutely love the freshness and variety! Delivery was super fast too. Highly recommended!"</p>
+        <p style="font-weight: bold; margin-top: 1rem;">- Amanda T.</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="stars">★★★★★</div>
+        <p>"The sour Skittles blew my mind! Definitely ordering again for my next party!"</p>
+        <p style="font-weight: bold; margin-top: 1rem;">- Jason L.</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="stars">★★★★★</div>
+        <p>"Super colorful, fresh, and packed with flavor. My kids loved it. Great customer service!"</p>
+        <p style="font-weight: bold; margin-top: 1rem;">- Sophia M.</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="stars">★★★★★</div>
+        <p>"Tropical Skittles made me feel like I was on a beach vacation. Amazing product and fast shipping!"</p>
+        <p style="font-weight: bold; margin-top: 1rem;">- Daniel K.</p>
+      </div>
+
+      <div class="feedback-card">
+        <div class="stars">★★★★★</div>
+        <p>"Best tasting Skittles ever! I’m obsessed with the wild berry flavor. Thanks for the free sample too!"</p>
+        <p style="font-weight: bold; margin-top: 1rem;">- Emily R.</p>
+      </div>
+
+    </div>
   </section>
+
+</div>
+
+<!-- Contact Modal -->
+<div id="contactModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('contactModal')">&times;</span>
+    <h2>Contact Us 📞</h2>
+    <p>📧 Email: <a href="mailto:sales@skittlesworld.com">sales@skittlesworld.com</a></p>
+    <p>📞 Phone: +1 (234) 567-8901</p>
+  </div>
+</div>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('feedbackModal')">&times;</span>
+    <h2>Send Feedback ✉️</h2>
+    <form action="https://formspree.io/f/yourformid" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Tell us what you think!" rows="5" required></textarea>
+      <button type="submit">Send Feedback</button>
+    </form>
+  </div>
 </div>
 
 <footer>
   &copy; 2025 Skittles World. Spread the Sweetness! 🌈
 </footer>
+
+<script>
+  document.getElementById('contactLink').onclick = function() {
+    document.getElementById('contactModal').style.display = 'block';
+  }
+  document.getElementById('feedbackLink').onclick = function() {
+    document.getElementById('feedbackModal').style.display = 'block';
+  }
+  function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+  }
+  window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+      event.target.style.display = 'none';
+    }
+  }
+</script>
 
 </body>
 </html>
